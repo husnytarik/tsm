@@ -3,55 +3,59 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Panel</title>
+    <title>Yönetim — Türk Sanat Musikisi</title>
     <link rel="stylesheet" href="css/admin.css" />
   </head>
   <body>
     <div class="bg-layer"></div>
+    <div class="bg-cizim"></div>
+    <div class="bg-kagit"></div>
 
-    <!-- Login Overlay -->
+    <!-- Giriş -->
     <div class="login-wrap" id="login-wrap">
-      <div class="login-box">
-        <h2>Admin Girişi</h2>
-        <p>Devam etmek için şifrenizi girin</p>
+      <div class="login-box" style="text-align: center">
+        <h2>Yönetim Girişi</h2>
+        <p>Arşive erişmek için şifrenizi girin</p>
         <input
           type="password"
           id="admin-pass"
-          placeholder="Şifre"
+          placeholder="••••••••"
           autocomplete="current-password"
         />
         <div class="login-err" id="login-err"></div>
         <button class="btn btn-primary" id="login-btn" style="width: 100%">
-          Giriş Yap
+          Giriş
         </button>
       </div>
     </div>
 
-    <!-- Admin App -->
+    <!-- Admin -->
     <div class="admin-app hidden" id="admin-app">
-      <!-- Header -->
       <div class="admin-header">
-        <div class="logo">Admin <em>Panel</em></div>
-        <a href="index.html" class="btn-back">← Player'a Dön</a>
+        <div class="logo">
+          <div class="logo-ana">Türk Sanat Musikisi</div>
+          <div class="logo-alt-yazi">Arşiv Yönetimi</div>
+        </div>
+        <a href="index2.html" class="btn-back">← Playere Dön</a>
       </div>
 
-      <!-- Upload Form -->
+      <!-- Yükleme formu -->
       <div class="card">
-        <div class="card-title">Yeni Parça Ekle</div>
+        <div class="card-title">Yeni Eser Ekle</div>
 
         <form id="upload-form">
           <div class="form-row">
             <div class="form-group">
-              <label for="track-title">Parça Adı *</label>
+              <label for="track-title">Eser Adı *</label>
               <input
                 type="text"
                 id="track-title"
-                placeholder="Parça adı"
+                placeholder="Eser adı"
                 required
               />
             </div>
             <div class="form-group">
-              <label for="track-artist">Müzisyen *</label>
+              <label for="track-artist">İcracı *</label>
               <input
                 type="text"
                 id="track-artist"
@@ -62,16 +66,15 @@
           </div>
 
           <div class="form-group full">
-            <label for="track-lyrics">Lirikler (opsiyonel)</label>
+            <label for="track-lyrics">Güfte (opsiyonel)</label>
             <textarea
               id="track-lyrics"
               placeholder="Şarkı sözlerini buraya girin..."
             ></textarea>
           </div>
 
-          <!-- Kaynak seçimi -->
           <div class="form-group full">
-            <label>Müzik Kaynağı *</label>
+            <label>Kaynak *</label>
             <div class="kaynak-toggle">
               <button
                 type="button"
@@ -80,8 +83,8 @@
                 onclick="kaynakSec('yt')"
               >
                 <svg
-                  width="14"
-                  height="14"
+                  width="13"
+                  height="13"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
@@ -98,8 +101,8 @@
                 onclick="kaynakSec('dosya')"
               >
                 <svg
-                  width="14"
-                  height="14"
+                  width="13"
+                  height="13"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
@@ -112,7 +115,6 @@
             </div>
           </div>
 
-          <!-- YouTube URL girişi -->
           <div class="form-group full" id="alan-yt">
             <label for="track-yt-url">YouTube URL veya Video ID</label>
             <input
@@ -123,7 +125,6 @@
             <div class="yt-preview" id="yt-preview"></div>
           </div>
 
-          <!-- Dosya yükleme -->
           <div class="form-group full hidden" id="alan-dosya">
             <label>Müzik Dosyası (MP3, WAV, OGG…)</label>
             <div class="file-drop" id="file-drop">
@@ -135,7 +136,6 @@
             </div>
           </div>
 
-          <!-- Upload Progress -->
           <div class="upload-progress hidden" id="upload-progress">
             <div class="upload-bar-wrap">
               <div class="upload-bar-fill" id="upload-bar-fill"></div>
@@ -147,15 +147,15 @@
             style="margin-top: 20px; display: flex; justify-content: flex-end"
           >
             <button type="submit" class="btn btn-primary" id="submit-btn">
-              Parçayı Yükle
+              Eseri Kaydet
             </button>
           </div>
         </form>
       </div>
 
-      <!-- Track List -->
+      <!-- Eser listesi -->
       <div class="card">
-        <div class="card-title">Mevcut Parçalar</div>
+        <div class="card-title">Mevcut Eserler</div>
         <div id="admin-tracklist">
           <div class="loading">
             <div class="spinner"></div>
@@ -168,21 +168,21 @@
     <!-- Toast -->
     <div class="toast" id="toast"></div>
 
-    <!-- Edit Modal -->
+    <!-- Düzenle Modali -->
     <div class="login-wrap hidden" id="edit-modal-overlay">
-      <div class="login-box" style="width: 420px; text-align: left">
-        <h2 style="margin-bottom: 20px">Parçayı Düzenle</h2>
+      <div class="login-box">
+        <h2>Eseri Düzenle</h2>
         <input type="hidden" id="edit-id" />
         <div class="form-group" style="margin-bottom: 14px">
-          <label>Parça Adı</label>
-          <input type="text" id="edit-title" placeholder="Parça adı" />
+          <label>Eser Adı</label>
+          <input type="text" id="edit-title" placeholder="Eser adı" />
         </div>
         <div class="form-group" style="margin-bottom: 14px">
-          <label>Sanatçı</label>
+          <label>İcracı</label>
           <input type="text" id="edit-artist" placeholder="Sanatçı adı" />
         </div>
-        <div class="form-group" style="margin-bottom: 20px">
-          <label>Lirikler (opsiyonel)</label>
+        <div class="form-group" style="margin-bottom: 22px">
+          <label>Güfte (opsiyonel)</label>
           <textarea
             id="edit-lyrics"
             placeholder="Şarkı sözleri..."
@@ -194,9 +194,9 @@
             class="btn"
             id="edit-cancel-btn"
             style="
-              border: 1px solid var(--border);
+              border: 1px solid rgba(240, 226, 200, 0.12);
               background: none;
-              color: var(--text-muted);
+              color: var(--gri);
             "
           >
             İptal
@@ -206,7 +206,6 @@
       </div>
     </div>
 
-    <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/config.js"></script>
     <script src="js/admin.js"></script>

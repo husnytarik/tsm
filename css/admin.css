@@ -1,7 +1,9 @@
 /* =============================================
-   ADMIN PANEL STYLES
+   TÜRK SANAT MUSİKİSİ — Admin Panel
+   Kahve/toprak zemin, krem yazı, Osmanlı arşiv
 ============================================= */
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IM+Fell+DW+Pica:ital@0;1&family=Noto+Naskh+Arabic:wght@400;600&family=Courier+Prime:ital@0;1&display=swap");
 
 *,
 *::before,
@@ -12,40 +14,97 @@
 }
 
 :root {
-  --bg: #0d0c0e;
-  --surface: #161419;
-  --surface2: #1e1b22;
-  --border: rgba(255, 255, 255, 0.07);
-  --accent: #c9a96e;
-  --accent-dim: rgba(201, 169, 110, 0.15);
-  --text: #e8e4dc;
-  --text-muted: rgba(232, 228, 220, 0.45);
-  --danger: #d4675a;
-  --success: #6abf8c;
-  --radius: 12px;
-  --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  --zemin: #3a2a1a;
+  --zemin2: #2e2010;
+  --yuzer: #4a3520;
+  --yuzer2: #3d2c18;
+  --krem: #f0e2c8;
+  --krem2: #e0ceae;
+  --krem3: rgba(240, 226, 200, 0.12);
+  --bordo: #8b2c2c;
+  --bordo-dim: rgba(139, 44, 44, 0.15);
+  --altin: #c49a3a;
+  --altin-dim: rgba(196, 154, 58, 0.15);
+  --gri: rgba(240, 226, 200, 0.4);
+  --tehlike: #c0392b;
+  --basari: #6a9f6a;
+  --serif: "Cormorant Garamond", serif;
+  --fell: "IM Fell DW Pica", serif;
+  --mono: "Courier Prime", monospace;
+  --radius: 4px;
+  --gecis: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html {
+  font-size: 16px;
 }
 
 body {
-  font-family: "DM Sans", sans-serif;
-  background: var(--bg);
-  color: var(--text);
+  font-family: var(--serif);
+  background: var(--zemin2);
+  color: var(--krem);
   min-height: 100vh;
 }
 
+/* =============================================
+   ARKA PLAN
+============================================= */
 .bg-layer {
   position: fixed;
   inset: 0;
   background-image: url("../assets/images/tsmbg.jpg");
   background-size: cover;
   background-position: center;
-  opacity: 0.08;
+  opacity: 0.07;
+  z-index: 0;
+  filter: sepia(1) brightness(0.5);
+  mix-blend-mode: luminosity;
+  pointer-events: none;
+}
+
+.bg-cizim {
+  position: fixed;
+  inset: 0;
+  background-image: url("../assets/images/cizim.png");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.04;
+  mix-blend-mode: screen;
   z-index: 0;
   pointer-events: none;
 }
 
+.bg-kagit {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(
+      ellipse 80% 60% at 50% 40%,
+      rgba(74, 53, 32, 0.7) 0%,
+      transparent 100%
+    ),
+    radial-gradient(ellipse at 0% 0%, rgba(20, 12, 4, 0.6) 0%, transparent 50%),
+    radial-gradient(
+      ellipse at 100% 0%,
+      rgba(20, 12, 4, 0.6) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 0% 100%,
+      rgba(20, 12, 4, 0.7) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 100% 100%,
+      rgba(20, 12, 4, 0.7) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+}
+
 /* =============================================
-   LOGIN SCREEN
+   GİRİŞ EKRANI
 ============================================= */
 .login-wrap {
   position: fixed;
@@ -54,67 +113,95 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 10;
-  background: rgba(13, 12, 14, 0.92);
-  backdrop-filter: blur(8px);
+  background: rgba(26, 16, 8, 0.88);
+  backdrop-filter: blur(6px);
 }
 
 .login-box {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 40px 36px;
-  width: 340px;
+  position: relative;
+  z-index: 1;
+  background: var(--yuzer);
+  border: 1px solid rgba(196, 154, 58, 0.2);
+  border-radius: 2px;
+  padding: 44px 40px;
+  width: 360px;
   text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+/* Köşe süsler */
+.login-box::before,
+.login-box::after {
+  content: "◆";
+  position: absolute;
+  font-size: 0.5rem;
+  color: var(--altin);
+  opacity: 0.4;
+}
+.login-box::before {
+  top: 10px;
+  left: 14px;
+}
+.login-box::after {
+  bottom: 10px;
+  right: 14px;
 }
 
 .login-box h2 {
-  font-family: "Playfair Display", serif;
-  font-size: 1.4rem;
-  color: var(--accent);
-  margin-bottom: 6px;
+  font-family: var(--fell);
+  font-size: 1.6rem;
+  font-style: italic;
+  color: var(--krem);
+  margin-bottom: 4px;
 }
 
 .login-box p {
-  font-size: 0.82rem;
-  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gri);
   margin-bottom: 28px;
 }
 
-.login-box input {
+.login-box input[type="password"] {
   width: 100%;
-  background: var(--surface2);
-  border: 1px solid var(--border);
+  background: rgba(240, 226, 200, 0.06);
+  border: 1px solid rgba(240, 226, 200, 0.15);
   border-radius: var(--radius);
   padding: 12px 16px;
-  color: var(--text);
-  font-family: "DM Sans", sans-serif;
-  font-size: 0.9rem;
+  color: var(--krem);
+  font-family: var(--mono);
+  font-size: 0.85rem;
   outline: none;
-  margin-bottom: 16px;
-  letter-spacing: 0.1em;
-  transition: border-color var(--transition);
+  margin-bottom: 8px;
+  letter-spacing: 0.15em;
+  transition: border-color var(--gecis);
+  text-align: center;
 }
 
 .login-box input:focus {
-  border-color: var(--accent);
+  border-color: var(--altin);
 }
 
 .login-err {
-  font-size: 0.78rem;
-  color: var(--danger);
-  margin-bottom: 12px;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--tehlike);
+  margin-bottom: 14px;
   min-height: 18px;
+  letter-spacing: 0.06em;
 }
 
 /* =============================================
-   LAYOUT
+   ADMIN APP
 ============================================= */
 .admin-app {
   position: relative;
   z-index: 1;
   max-width: 900px;
   margin: 0 auto;
-  padding: 40px 24px 80px;
+  padding: 44px 48px 80px;
 }
 
 .hidden {
@@ -122,67 +209,118 @@ body {
 }
 
 /* =============================================
-   HEADER
+   BAŞLIK
 ============================================= */
 .admin-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 40px;
-  padding-bottom: 18px;
-  border-bottom: 1px solid var(--border);
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(240, 226, 200, 0.08);
+  position: relative;
 }
 
-.admin-header .logo {
-  font-family: "Playfair Display", serif;
-  font-size: 1.3rem;
-  color: var(--accent);
+.admin-header::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--bordo), var(--altin), transparent);
 }
 
-.admin-header .logo em {
-  font-style: normal;
-  color: var(--text-muted);
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
+.logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.logo-ana {
+  font-family: var(--fell);
+  font-size: 1.6rem;
+  font-style: italic;
+  color: var(--krem);
+}
+
+.logo-alt-yazi {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  margin-left: 10px;
+  color: var(--altin);
+  margin-top: 4px;
+  opacity: 0.7;
 }
 
 .btn-back {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  text-decoration: none;
-  letter-spacing: 0.08em;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  transition: color var(--transition);
+  color: var(--gri);
+  text-decoration: none;
+  transition: color var(--gecis);
+  border: 1px solid rgba(240, 226, 200, 0.1);
+  padding: 7px 14px;
+  border-radius: var(--radius);
 }
 
 .btn-back:hover {
-  color: var(--accent);
+  color: var(--altin);
+  border-color: rgba(196, 154, 58, 0.3);
 }
 
 /* =============================================
-   UPLOAD FORM
+   KART
 ============================================= */
 .card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 28px;
-  margin-bottom: 28px;
+  background: var(--yuzer);
+  border: 1px solid rgba(240, 226, 200, 0.08);
+  border-radius: 2px;
+  padding: 28px 32px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+/* Kart köşe detayı */
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--bordo), transparent);
 }
 
 .card-title {
-  font-family: "Playfair Display", serif;
-  font-size: 1.1rem;
-  margin-bottom: 22px;
-  color: var(--text);
+  font-family: var(--fell);
+  font-size: 1.15rem;
+  font-style: italic;
+  color: var(--krem);
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(240, 226, 200, 0.07);
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
+.card-title::before {
+  content: "◆";
+  font-size: 0.4rem;
+  color: var(--bordo);
+}
+
+/* =============================================
+   FORM
+============================================= */
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px;
+  gap: 16px;
 }
 
 @media (max-width: 560px) {
@@ -194,8 +332,8 @@ body {
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 7px;
-  margin-bottom: 14px;
+  gap: 8px;
+  margin-bottom: 16px;
 }
 
 .form-group.full {
@@ -203,240 +341,47 @@ body {
 }
 
 label {
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--altin);
+  opacity: 0.8;
 }
 
 input[type="text"],
-input[type="file"],
 textarea {
-  background: var(--surface2);
-  border: 1px solid var(--border);
+  background: rgba(240, 226, 200, 0.05);
+  border: 1px solid rgba(240, 226, 200, 0.12);
   border-radius: var(--radius);
   padding: 11px 14px;
-  color: var(--text);
-  font-family: "DM Sans", sans-serif;
-  font-size: 0.88rem;
+  color: var(--krem);
+  font-family: var(--serif);
+  font-size: 0.95rem;
   outline: none;
   width: 100%;
-  transition: border-color var(--transition);
+  transition:
+    border-color var(--gecis),
+    background var(--gecis);
 }
 
-input:focus,
+input[type="text"]:focus,
 textarea:focus {
-  border-color: var(--accent);
+  border-color: rgba(196, 154, 58, 0.5);
+  background: rgba(240, 226, 200, 0.07);
+}
+
+input[type="text"]::placeholder,
+textarea::placeholder {
+  color: rgba(240, 226, 200, 0.2);
+  font-style: italic;
 }
 
 textarea {
   resize: vertical;
   min-height: 110px;
-  line-height: 1.6;
-}
-
-/* File input custom */
-.file-drop {
-  border: 1.5px dashed var(--border);
-  border-radius: var(--radius);
-  padding: 20px;
-  text-align: center;
-  cursor: pointer;
-  transition:
-    border-color var(--transition),
-    background var(--transition);
-  position: relative;
-}
-
-.file-drop:hover,
-.file-drop.dragover {
-  border-color: var(--accent);
-  background: var(--accent-dim);
-}
-
-.file-drop input[type="file"] {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  cursor: pointer;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-}
-
-.file-drop-text {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  pointer-events: none;
-}
-
-.file-drop-text strong {
-  color: var(--accent);
-  font-weight: 500;
-}
-
-.file-name-display {
-  font-size: 0.78rem;
-  color: var(--accent);
-  margin-top: 6px;
-}
-
-/* Upload progress */
-.upload-progress {
-  margin-top: 14px;
-}
-
-.upload-bar-wrap {
-  height: 3px;
-  background: var(--border);
-  border-radius: 2px;
-  overflow: hidden;
-  margin-bottom: 8px;
-}
-
-.upload-bar-fill {
-  height: 100%;
-  background: var(--accent);
-  width: 0%;
-  transition: width 0.3s;
-}
-
-.upload-status {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-}
-
-/* =============================================
-   BUTTONS
-============================================= */
-.btn {
-  padding: 11px 24px;
-  border-radius: 24px;
-  border: none;
-  font-family: "DM Sans", sans-serif;
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: all var(--transition);
-  font-weight: 500;
-}
-
-.btn-primary {
-  background: var(--accent);
-  color: var(--bg);
-}
-
-.btn-primary:hover {
-  background: #d9b97e;
-  transform: translateY(-1px);
-}
-.btn-primary:active {
-  transform: translateY(0);
-}
-.btn-primary:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.btn-edit {
-  background: none;
-  border: 1px solid var(--border);
-  color: var(--accent);
-  padding: 5px 12px;
-  font-size: 0.75rem;
-  border-radius: 8px;
-}
-
-.btn-edit:hover {
-  background: var(--accent-dim);
-  border-color: var(--accent);
-}
-
-.btn-danger {
-  background: none;
-  border: 1px solid var(--border);
-  color: var(--danger);
-  padding: 5px 12px;
-  font-size: 0.75rem;
-  border-radius: 8px;
-}
-
-.btn-danger:hover {
-  background: rgba(212, 103, 90, 0.1);
-  border-color: var(--danger);
-}
-
-.btn-danger:hover {
-  background: rgba(212, 103, 90, 0.1);
-  border-color: var(--danger);
-}
-
-/* =============================================
-   TOAST
-============================================= */
-.toast {
-  position: fixed;
-  bottom: 28px;
-  right: 28px;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 12px 18px;
-  font-size: 0.85rem;
-  z-index: 100;
-  opacity: 0;
-  transform: translateY(12px);
-  transition: all 0.3s;
-  pointer-events: none;
-}
-
-.toast.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-.toast.success {
-  border-left: 3px solid var(--success);
-}
-.toast.error {
-  border-left: 3px solid var(--danger);
-}
-
-/* =============================================
-   TRACK LIST (Admin)
-============================================= */
-.track-admin-row {
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  align-items: center;
-  gap: 12px;
-  padding: 13px 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.track-admin-row:last-child {
-  border-bottom: none;
-}
-
-.row-info .row-title {
-  font-size: 0.9rem;
-}
-.row-info .row-artist {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  margin-top: 2px;
-}
-
-.row-has-lyrics {
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent);
-  opacity: 0.7;
-}
-
-.row-date {
-  font-size: 0.72rem;
-  color: var(--text-muted);
+  line-height: 1.7;
+  font-style: italic;
 }
 
 /* =============================================
@@ -450,35 +395,38 @@ textarea {
 .kaynak-btn {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
   padding: 9px 18px;
   border-radius: var(--radius);
-  border: 1px solid var(--border);
-  background: var(--surface2);
-  color: var(--text-muted);
-  font-family: "DM Sans", sans-serif;
-  font-size: 0.82rem;
+  border: 1px solid rgba(240, 226, 200, 0.12);
+  background: rgba(240, 226, 200, 0.04);
+  color: var(--gri);
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: all var(--transition);
+  transition: all var(--gecis);
 }
 
 .kaynak-btn:hover {
-  border-color: rgba(255, 255, 255, 0.15);
-  color: var(--text);
+  border-color: rgba(240, 226, 200, 0.2);
+  color: var(--krem);
 }
 
 .kaynak-btn.aktif {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: var(--accent-dim);
+  border-color: rgba(196, 154, 58, 0.5);
+  color: var(--altin);
+  background: var(--altin-dim);
 }
 
+/* YouTube önizleme */
 .yt-preview {
   margin-top: 10px;
   border-radius: var(--radius);
   overflow: hidden;
-  background: var(--surface2);
-  border: 1px solid var(--border);
+  background: rgba(240, 226, 200, 0.04);
+  border: 1px solid rgba(240, 226, 200, 0.1);
   display: none;
 }
 
@@ -493,13 +441,325 @@ textarea {
   display: block;
 }
 
-.yt-badge {
+/* =============================================
+   DOSYA YÜKLEME
+============================================= */
+.file-drop {
+  border: 1.5px dashed rgba(240, 226, 200, 0.15);
+  border-radius: var(--radius);
+  padding: 22px;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    border-color var(--gecis),
+    background var(--gecis);
+  position: relative;
+}
+
+.file-drop:hover,
+.file-drop.dragover {
+  border-color: rgba(196, 154, 58, 0.4);
+  background: var(--altin-dim);
+}
+
+.file-drop input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+.file-drop-text {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--gri);
+  pointer-events: none;
+}
+
+.file-drop-text strong {
+  color: var(--altin);
+  font-weight: normal;
+}
+
+.file-name-display {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--altin);
+  margin-top: 6px;
+}
+
+/* =============================================
+   UPLOAD PROGRESS
+============================================= */
+.upload-progress {
+  margin-top: 14px;
+}
+
+.upload-bar-wrap {
+  height: 2px;
+  background: rgba(240, 226, 200, 0.08);
+  border-radius: 1px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.upload-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--bordo), var(--altin));
+  width: 0%;
+  transition: width 0.3s;
+  box-shadow: 0 0 6px rgba(196, 154, 58, 0.4);
+}
+
+.upload-status {
+  font-family: var(--mono);
   font-size: 0.65rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
+  color: var(--gri);
+}
+
+/* =============================================
+   BUTONLAR
+============================================= */
+.btn {
+  padding: 10px 24px;
+  border-radius: var(--radius);
+  border: none;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--gecis);
+}
+
+.btn-primary {
+  background: var(--bordo);
+  color: var(--krem);
+  border: 1px solid rgba(240, 226, 200, 0.1);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary:hover {
+  background: #a03535;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-edit {
+  background: none;
+  border: 1px solid rgba(196, 154, 58, 0.25);
+  color: var(--altin);
+  padding: 5px 12px;
+  font-size: 0.6rem;
+  border-radius: var(--radius);
+}
+
+.btn-edit:hover {
+  background: var(--altin-dim);
+  border-color: rgba(196, 154, 58, 0.5);
+}
+
+.btn-danger {
+  background: none;
+  border: 1px solid rgba(192, 57, 43, 0.25);
+  color: #c0392b;
+  padding: 5px 12px;
+  font-size: 0.6rem;
+  border-radius: var(--radius);
+}
+
+.btn-danger:hover {
+  background: rgba(192, 57, 43, 0.12);
+  border-color: rgba(192, 57, 43, 0.5);
+}
+
+/* =============================================
+   TOAST
+============================================= */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  background: var(--yuzer);
+  border: 1px solid rgba(240, 226, 200, 0.1);
+  border-radius: var(--radius);
+  padding: 12px 20px;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--krem);
+  z-index: 100;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: all 0.3s;
+  pointer-events: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.toast.success {
+  border-left: 3px solid var(--basari);
+}
+.toast.error {
+  border-left: 3px solid var(--tehlike);
+}
+
+/* =============================================
+   PARÇA LİSTESİ
+============================================= */
+.track-admin-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(240, 226, 200, 0.06);
+  transition: background var(--gecis);
+}
+
+.track-admin-row:last-child {
+  border-bottom: none;
+}
+.track-admin-row:hover {
+  background: rgba(240, 226, 200, 0.02);
+}
+
+.row-info .row-title {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  color: var(--krem);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.row-info .row-artist {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--gri);
+  margin-top: 3px;
+  letter-spacing: 0.05em;
+}
+
+.row-has-lyrics {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--altin);
+  opacity: 0.6;
+}
+
+.row-date {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: rgba(240, 226, 200, 0.2);
+  letter-spacing: 0.04em;
+}
+
+.yt-badge {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
   color: #e05555;
   border: 1px solid rgba(224, 85, 85, 0.3);
   padding: 2px 6px;
-  border-radius: 4px;
-  margin-left: 6px;
+  border-radius: 2px;
+}
+
+/* =============================================
+   DÜZENLE MODALİ
+============================================= */
+.login-wrap {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  background: rgba(26, 16, 8, 0.88);
+  backdrop-filter: blur(6px);
+}
+
+.login-box {
+  position: relative;
+  z-index: 1;
+  background: var(--yuzer);
+  border: 1px solid rgba(196, 154, 58, 0.2);
+  border-radius: 2px;
+  padding: 36px 36px;
+  width: 420px;
+  text-align: left;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+.login-box h2 {
+  font-family: var(--fell);
+  font-size: 1.4rem;
+  font-style: italic;
+  color: var(--krem);
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(240, 226, 200, 0.08);
+}
+
+/* =============================================
+   LOADING
+============================================= */
+.loading {
+  text-align: center;
+  padding: 36px;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--gri);
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid rgba(240, 226, 200, 0.08);
+  border-top-color: var(--bordo);
+  border-radius: 50%;
+  animation: don 0.7s linear infinite;
+  margin: 0 auto 12px;
+}
+
+@keyframes don {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =============================================
+   RESPONSIVE
+============================================= */
+@media (max-width: 600px) {
+  .admin-app {
+    padding: 28px 20px 60px;
+  }
+  .card {
+    padding: 20px;
+  }
+  .login-box {
+    width: 90%;
+    padding: 28px 24px;
+  }
 }
