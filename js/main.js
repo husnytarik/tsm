@@ -15,7 +15,8 @@ let isPlaying = false;
 let lyricsOpen = false;
 let ytPlayer = null;
 let ytReady = false;
-let ytPending = null; // { idx, play }
+let ytPending = null;
+let playId = 0; // Her selectTrack'te artar, eski async işlemler iptal olur
 
 const audio = new Audio();
 audio.preload = "metadata";
@@ -93,9 +94,9 @@ window.onYouTubeIframeAPIReady = function () {
 };
 
 function onYtReady() {
-  ytReady = true; // Sadece burada set et — metodlar artık hazır
+  ytReady = true;
   if (ytPending) {
-    loadYtTrack(ytPending.idx, ytPending.play);
+    loadYtTrack(ytPending.idx, ytPending.play, ytPending.myId);
     ytPending = null;
   }
 }
@@ -193,24 +194,26 @@ function renderPlaylist() {
 function selectTrack(idx, play = true) {
   if (idx < 0 || idx >= tracks.length) return;
 
-  const prev = currentIdx;
+  // Her seçimde yeni ID — eski setTimeout'lar bu ID'yi kontrol edip iptal olur
+  playId++;
+  const myId = playId;
+
+  // Her iki kaynağı da durdur
+  audio.pause();
+  audio.src = "";
+  stopYtProgress();
+  if (ytPlayer && typeof ytPlayer.stopVideo === "function") {
+    try {
+      ytPlayer.stopVideo();
+    } catch (e) {}
+  }
+
   currentIdx = idx;
   const t = tracks[idx];
-
-  // Önceki kaynağı durdur
-  stopYtProgress();
-  if (prev !== -1 && tracks[prev] && tracks[prev].youtube_url) {
-    if (ytPlayer && typeof ytPlayer.stopVideo === "function")
-      ytPlayer.stopVideo();
-  } else {
-    audio.pause();
-    audio.src = "";
-  }
 
   elParcaAdi.textContent = t.title;
   elSanatci.textContent = t.artist;
   elParcaNo.textContent = ROMEN[idx] || (idx + 1).toString();
-
   elLirikMetin.textContent =
     t.lyrics && t.lyrics.trim()
       ? t.lyrics
@@ -223,36 +226,45 @@ function selectTrack(idx, play = true) {
 
   if (t.youtube_url) {
     if (!ytReady || !ytPlayer) {
-      ytPending = { idx, play };
+      ytPending = { idx, play, myId };
       return;
     }
-    loadYtTrack(idx, play);
+    loadYtTrack(idx, play, myId);
   } else {
-    // Kısa gecikme — önceki audio.pause() tamamlansın
     setTimeout(() => {
+      if (playId !== myId) return; // Başka bir parça seçildiyse iptal
       audio.src = t.file_url;
       audio.load();
       if (play) {
         audio
           .play()
-          .then(() => setPlaying(true))
-          .catch((e) => console.warn("Audio play:", e));
+          .then(() => {
+            if (playId === myId) setPlaying(true);
+          })
+          .catch((e) => console.warn("Audio:", e));
       }
-    }, 50);
+    }, 80);
   }
 }
 
-function loadYtTrack(idx, play) {
+function loadYtTrack(idx, play, myId) {
   const t = tracks[idx];
   const vid = ytVideoId(t.youtube_url);
   if (!vid || !ytPlayer) return;
 
-  ytPlayer.cueVideoById(vid);
+  try {
+    ytPlayer.cueVideoById(vid);
+  } catch (e) {
+    return;
+  }
+
   if (play) {
     setTimeout(() => {
-      if (ytPlayer && typeof ytPlayer.playVideo === "function") {
-        ytPlayer.playVideo();
-      }
+      if (playId !== myId) return; // Başka parça seçildiyse iptal
+      try {
+        if (ytPlayer && typeof ytPlayer.playVideo === "function")
+          ytPlayer.playVideo();
+      } catch (e) {}
     }, 800);
   }
 }

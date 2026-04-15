@@ -1,1 +1,14 @@
+# Sensitive files
 dbpass.txt
+.env
+.env.*
+
+# Logs
+*.log
+
+# Node (varsa)
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
