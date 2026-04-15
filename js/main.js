@@ -1,5 +1,5 @@
 // =============================================
-// TÜRK SANAT MUSİKİSİ PLAYER — main2.js
+// TÜRK SANAT MUSİKİSİ PLAYER — main.js
 // YouTube IFrame API + Dosya karma destek
 // =============================================
 
